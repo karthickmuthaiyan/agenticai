@@ -47,14 +47,23 @@ async def run_agent():
     
     print("Processing queries in parallel...\n")
 
+# Get input from user and process queries concurrently
+    while True:
+        user_input = input("Enter your query (or 'exit' to quit): ")
+        if user_input.lower() == 'exit':
+            break
+        result = await Runner.run(agent, user_input)
+        print(f"A: {result.final_output}\n")
+
+        
 # Process all queries concurrently
-    tasks = [Runner.run(agent, query) for query in queries]
-    results = await asyncio.gather(*tasks)
+#    tasks = [Runner.run(agent, query) for query in queries]
+#    results = await asyncio.gather(*tasks)
 
 # Display results
-    for query, result in zip(queries, results):
-        print(f"Q: {query}")
-        print(f"A: {result.final_output}\n")
+#    for query, result in zip(queries, results):
+#        print(f"Q: {query}")
+#        print(f"A: {result.final_output}\n")
 
 if __name__ == "__main__":
     asyncio.run(run_agent())
