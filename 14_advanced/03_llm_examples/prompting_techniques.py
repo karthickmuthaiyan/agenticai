@@ -45,7 +45,7 @@ def zero_shot_prompt():
     )
     print(response.output_text)
 
-
+exit 0
 # -------------------------------------------------
 # 2. One-shot prompting — one worked example before the real case
 # -------------------------------------------------

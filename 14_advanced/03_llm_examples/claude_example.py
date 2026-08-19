@@ -7,6 +7,7 @@ client = Anthropic()
 
 response = client.messages.create(
     model="claude-haiku-4-5-20251001",
+    system="You are a helpful assistant that explains concepts in simple terms.",
     max_tokens=200,
     messages=[
         {

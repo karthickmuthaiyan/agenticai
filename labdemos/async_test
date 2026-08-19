@@ -1,0 +1,40 @@
+import asyncio
+import time
+from typing import Any
+import asyncio
+
+def greet_sync(name):
+    print(f"Hello from sync function! Processing {name}")
+    time.sleep(3)  # Simulate a blocking operation
+    
+async def greet_async(name):
+    print(f"Hello from async function! Processing {name}")
+    await asyncio.sleep(3)
+
+def run_sync():
+    """Synchronous function that processes a name."""
+    print("===Sync function started===")
+    start = time.perf_counter()
+    for i in range(3):
+        greet_sync(f"Task {i + 1}")
+    end = time.perf_counter()
+    print(f"===Sync function completed in {end - start:.2f} seconds===")
+
+
+async def run_async():
+    """Asynchronous function that processes a name with a delay."""
+    print("===Async function started===")
+    start =time.perf_counter()
+    await asyncio.gather(
+            greet_async("Task 1"),
+            greet_async("Task 2"),
+            greet_async("Task 3")
+    )
+    end=time.perf_counter()
+    print(f"===Async function completed in {end-start:.2f} seconds===")
+
+
+
+## Main
+run_sync()
+asyncio.run(run_async())
