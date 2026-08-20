@@ -2,6 +2,7 @@
 # tree-of-thought, and ReAct — all applied to one realistic use case:
 # an e-commerce assistant deciding refund eligibility for a return request.
 
+from pyexpat.errors import messages
 import re
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -45,7 +46,6 @@ def zero_shot_prompt():
     )
     print(response.output_text)
 
-exit 0
 # -------------------------------------------------
 # 2. One-shot prompting — one worked example before the real case
 # -------------------------------------------------
@@ -185,17 +185,21 @@ def react_prompt(customer_message: str, max_steps: int = 4):
         {"role": "user", "content": customer_message},
     ]
 
+    
     for _ in range(max_steps):
         response = client.responses.create(model=MODEL, input=messages)
         text = response.output_text
         print(text, "\n")
-
+        
         if "Final Answer:" in text:
             break
 
         messages.append({"role": "assistant", "content": text})
+     
 
         match = re.search(r"Action:\s*lookup_order\[(.*?)\]", text)
+        print(match)
+        exit()
         if not match:
             break
 
@@ -209,19 +213,19 @@ def react_prompt(customer_message: str, max_steps: int = 4):
 # -------------------------------------------------
 if __name__ == "__main__":
     print("=== Zero-shot ===")
-    zero_shot_prompt()
+    #zero_shot_prompt()
 
     print("\n=== One-shot ===")
-    one_shot_prompt()
-
+    #one_shot_prompt()
+    
     print("\n=== Few-shot ===")
-    few_shot_prompt()
-
+    #few_shot_prompt()
+    
     print("\n=== Chain-of-thought ===")
-    chain_of_thought_prompt()
-
+    #chain_of_thought_prompt()
+    
     print("\n=== Tree-of-thought ===")
-    tree_of_thought_prompt()
+    #tree_of_thought_prompt()
 
     print("\n=== ReAct ===")
     react_prompt("I'd like to return order A1003. Can I get a refund?")

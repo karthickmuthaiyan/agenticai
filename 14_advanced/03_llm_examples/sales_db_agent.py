@@ -6,12 +6,12 @@ load_dotenv(override=True)
 
 @function_tool
 def run_sql(query: str) -> str:
-    """Execute a read-only SQL query on the sales database."""
     
-    conn = sqlite3.connect(r"c:\code\agenticai\14_advanced\03_llm_examples\sales.db")
+    conn = sqlite3.connect(r"D:\git\AgenticAI\agenticai\14_advanced\03_llm_examples\sales.db")
     cursor = conn.cursor()
 
-    cursor.execute(query)
+    cursor.execute(query)    
+    
     rows = cursor.fetchall()
 
     conn.close()
@@ -28,9 +28,17 @@ agent = Agent(
     tools=[run_sql],
 )
 
-result = Runner.run_sync(
-    agent,
-    "Which five products generated the highest revenue this year?"
-)
+# Run agent in loop with sample quesiton from user input
+#run in loop until exit is given as input
 
-print(result.final_output)
+while True:
+    user_input = input("Enter your question (or 'exit' to quit): ")
+    if user_input.lower() == "exit":
+        break
+
+    result = Runner.run_sync(
+        agent,
+        input=user_input
+    )
+
+    print(result.final_output)
