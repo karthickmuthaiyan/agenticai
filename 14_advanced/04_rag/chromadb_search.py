@@ -1,7 +1,7 @@
 import chromadb
 
 # Create (or open) a persistent ChromaDB database
-client = chromadb.PersistentClient(path=r"c:/code/agenticai/14_advanced/04_rag/chroma_db")
+client = chromadb.PersistentClient(path=r"D:\git\AgenticAI\agenticai\14_advanced\04_rag\chroma_db")
 collection = client.get_or_create_collection("articles")
 
 # Clear any existing data (optional)
@@ -19,8 +19,11 @@ documents = [
     "SQLite is a lightweight relational database.",
     "Transformers are deep learning models used in natural language processing.",
     "LangChain helps developers build LLM-powered applications.",
-    "Pandas is a Python library for data analysis and manipulation."
+    "Pandas is a Python library for data analysis and manipulation.",
+    "Joshua is a 5th grader who loves to play soccer and read books about space."
 ]
+
+print("Length of documents:", len(documents))
 
 # Store documents
 collection.add(
@@ -33,9 +36,16 @@ query = input("Enter your search query: ")
 
 results = collection.query(
     query_texts=[query],
-    n_results=3
+    n_results=1
 )
+
+#print("\nResults: ", results)
+
 
 print("\nTop 3 Semantic Search Results:\n")
 for i, doc in enumerate(results["documents"][0], start=1):
     print(f"{i}. {doc}")
+    
+for i, distance in enumerate(results["distances"][0], start=1):
+    print(f"Distance for result {i}: {distance:.4f}")
+    

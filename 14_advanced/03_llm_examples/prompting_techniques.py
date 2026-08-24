@@ -198,8 +198,7 @@ def react_prompt(customer_message: str, max_steps: int = 4):
      
 
         match = re.search(r"Action:\s*lookup_order\[(.*?)\]", text)
-        print(match)
-        exit()
+        
         if not match:
             break
 

@@ -1,7 +1,7 @@
 import chromadb
 
 # Create (or open) a persistent ChromaDB database
-client = chromadb.PersistentClient(path=r"c:/code/agenticai/14_advanced/04_rag/chroma_db")
+client = chromadb.PersistentClient(path=r"D:\git\AgenticAI\agenticai\14_advanced\04_rag\chroma_db")
 collection = client.get_or_create_collection("crud_demo")
 
 # Start from a clean collection so the demo is repeatable
@@ -18,9 +18,10 @@ documents = [
     "Python is a popular programming language for AI and data science.",
     "Machine learning enables computers to learn from data.",
     "ChromaDB is a vector database used in Retrieval-Augmented Generation (RAG).",
+    "Joshua is a 5th grader who loves to play soccer and read books about space.",
 ]
 ids = [str(i) for i in range(1, len(documents) + 1)]
-metadatas = [{"topic": "programming"}, {"topic": "ai"}, {"topic": "database"}]
+metadatas = [{"topic": "programming"}, {"topic": "ai"}, {"topic": "database"}, {"topic": "education"}]
 
 collection.add(ids=ids, documents=documents, metadatas=metadatas)
 print(f"Created {len(documents)} documents.\n")
@@ -33,6 +34,7 @@ result = collection.get(ids=["2"])
 print("Read by id '2':")
 print(f"  Document: {result['documents'][0]}")
 print(f"  Metadata: {result['metadatas'][0]}\n")
+print(f"result: {result}\n")
 
 query = "database for storing vectors"
 search_results = collection.query(query_texts=[query], n_results=2)

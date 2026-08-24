@@ -45,6 +45,8 @@ embeddings = model.encode(
 # -------------------------------------------------------
 dimension = embeddings.shape[1]
 
+print (f"Creating FAISS index with dimension = {dimension}...")
+
 # Append raw vectors into a flat list for L2 (Euclidean distance) comparison
 # The only identity a vector has is its row position (0, 1, 2, ...) - the order which they were added in
 index = faiss.IndexFlatL2(dimension)
@@ -72,12 +74,19 @@ def semantic_search(query, top_k=3):
 
     print("\nQuery :", query)
     print("-" * 60)
+    
+    print(f"indices = {indices}, distances = {distances}\n")
+    
+    for rank,idx in enumerate(indices[0], start=1):
+        print(f"Rank {rank}: Document Index = {idx}, Distance = {distances[0][rank-1]:.4f}")
+        print(f"Document: {documents[idx]}\n")
+    exit ()
 
     for rank, (idx, distance) in enumerate(
         zip(indices[0], distances[0]),
         start=1
     ):
-        print(f"{rank}. Distance = {distance:.4f}")
+        print(f"{rank} and {idx}. Distance = {distance:.4f}")
         
         # Index into documents to find the original document
         print(documents[idx])

@@ -1,0 +1,10 @@
+CountVectorization
+RNN
+bidirectional RNN
+GRU
+LSTM
+BILSTM
+
+https://colab.research.google.com/drive/1dBifi0R0O1RO3bVq9rPWyE3mOt3yyNSt?usp=sharing
+https://huggingface.co/models?pipeline_tag=sentence-similarity&sort=downloads
+https://docs.google.com/document/d/1F7BUi27TuDXRj20Nj0ZGBVPUfYno5qg60sCe6xL5wE8/edit?usp=sharing

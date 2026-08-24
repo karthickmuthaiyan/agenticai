@@ -41,7 +41,8 @@ reducer = umap.UMAP(
 )
 
 embedding_2d = reducer.fit_transform(embeddings)
-
+print(embedding_2d)
+exit()
 # -----------------------------
 # Plot
 # -----------------------------

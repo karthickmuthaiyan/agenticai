@@ -15,7 +15,7 @@ from langchain_core.output_parsers import (
 
 load_dotenv(override=True)
 
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash", temperature=0)
+llm = ChatGoogleGenerativeAI(model="gemini-3.6-flash", temperature=0)
 
 # -----------------------------
 # 1. StrOutputParser
@@ -78,7 +78,7 @@ pydantic_prompt = ChatPromptTemplate.from_messages([
 ]).partial(format_instructions=pydantic_parser.get_format_instructions())
 
 pydantic_chain = pydantic_prompt | llm | pydantic_parser
-result = pydantic_chain.invoke({"city": "Paris"})
+result = pydantic_chain.invoke({"city": "Las Vegas"})
 print(f"Type: {type(result).__name__}")
 print(f"Result: {result}")
 print(f"Attribute access: result.population = {result.population}")
