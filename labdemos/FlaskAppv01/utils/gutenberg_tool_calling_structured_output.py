@@ -37,7 +37,13 @@ def search_gutenberg_books(query: str) -> str:
     """Search Project Gutenberg's free ebook catalog via the Gutendex API
     (no key required). Returns up to 5 matches as 'Title by Author(s)
     [id=..., downloads=...]', one per line, ordered by popularity."""
-    resp = requests.get(GUTENDEX_URL, params={"search": query}, timeout=10)
+    
+    # Custom headers to mimic a browser and prevent Cloudflare 403 Forbidden errors
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    }
+    # Pass the headers dictionary into the get request
+    resp = requests.get(GUTENDEX_URL, params={"search": query}, headers=headers, timeout=10)
     resp.raise_for_status()
     results = resp.json().get("results", [])
     if not results:
